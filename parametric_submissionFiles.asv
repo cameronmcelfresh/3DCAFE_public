@@ -1,0 +1,24 @@
+%% Script to re-write the DAMASK submission shell files
+
+folderPrefixVal = '2023_03_18_ParametricStudy_Cu/';
+%folderPrefix = '2023_04_07_ParametricStudy_Steel/';
+
+%numFiles = 27;
+numFiles = 240;
+
+%sLoop through the files
+for fileNum = 0:numFiles-1
+    %Load the files
+    load(folderPrefix+"/trial_"+string(round(fileNum,0))+"/mat_dat.mat");
+
+    %write DAMASK files - this copies the indiviudal submission files
+    writeDAMASK(materialIndicator,grid,xgrid,ygrid,200,realGridSize/gridSize,cmap,foldername)
+end
+
+%% Write the full submission file
+fid = fopen( folderPrefix + "group_submit.sh", 'wt' );
+for iter_val = 0:trialIter-1
+    fprintf( fid, 'cd trial_%i\n', iter_val);
+    fprintf( fid, './submit_simulation.sh\ncd ..\n\n');
+end
+fclose(fid);
