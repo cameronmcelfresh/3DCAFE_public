@@ -1,0 +1,29 @@
+---
+homogenization:
+  SX:
+    N_constituents: 1
+    mechanical: {type: pass}
+
+phase:
+  316L:
+    lattice: cF
+    mechanical:
+      output: [F, P, F_e, F_p, L_p, O]
+      elastic: {type: Hooke, C_11: 207.0e+9, C_12: 135e+9, C_44: 130e+9}
+      plastic:
+        type: phenopowerlaw
+        N_sl: [12]
+        a_sl: 1.0
+        n_sl: 38
+        h_0_sl-sl: 3.16e+9
+        xi_0_sl: [2.63e+8]
+        xi_inf_sl: [1.13e+9]
+        h_sl-sl: [0.05, 0.05,0.05, 0.05, 0.05, 0.05, 0.05]
+        dot_gamma_0_sl: 1
+        output: [xi_sl]
+  void:
+    lattice: cF
+    mechanical:
+      output: [F, P, F_e, F_p, L_p, O]
+      elastic: {type: Hooke, C_11: 10e+3, C_12: 10e+3, C_44: 10e+3}
+material:
